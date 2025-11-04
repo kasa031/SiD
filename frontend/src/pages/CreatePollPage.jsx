@@ -16,6 +16,7 @@ function CreatePollPage() {
   const [newTag, setNewTag] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
   
   const categories = [
     { value: 'miljo', label: 'Miljø' },

@@ -57,6 +57,15 @@ router.post('/:pollId', authenticateToken, async (req, res) => {
         [option_id]
       );
 
+      // Oppdater user stats
+      await client.query(
+        `INSERT INTO user_stats (user_id, total_votes)
+         VALUES ($1, 1)
+         ON CONFLICT (user_id) 
+         DO UPDATE SET total_votes = user_stats.total_votes + 1`,
+        [userId]
+      );
+
       await client.query('COMMIT');
 
       res.json({ message: 'Stemme registrert', check_badges: true });
