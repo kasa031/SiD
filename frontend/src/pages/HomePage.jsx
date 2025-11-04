@@ -94,7 +94,16 @@ function HomePage() {
               )}
               {poll.category && (
                 <div className="poll-category">
-                  <span className="category-badge">{poll.category}</span>
+                  <span className="category-badge">
+                    {poll.category === 'miljo' ? 'Miljø' :
+                     poll.category === 'samfunn' ? 'Samfunn' :
+                     poll.category === 'helse' ? 'Helse' :
+                     poll.category === 'utdanning' ? 'Utdanning' :
+                     poll.category === 'transport' ? 'Transport' :
+                     poll.category === 'okonomi' ? 'Økonomi' :
+                     poll.category === 'politikk' ? 'Politikk' :
+                     poll.category === 'kultur' ? 'Kultur' : poll.category}
+                  </span>
                 </div>
               )}
               <div className="poll-creator">
