@@ -156,6 +156,15 @@ router.post('/', authenticateToken, async (req, res) => {
     try {
       await client.query('BEGIN');
 
+      // Oppdater user stats først
+      await client.query(
+        `INSERT INTO user_stats (user_id, total_polls_created)
+         VALUES ($1, 1)
+         ON CONFLICT (user_id) 
+         DO UPDATE SET total_polls_created = user_stats.total_polls_created + 1`,
+        [userId]
+      );
+
       // Opprett poll
       const pollResult = await client.query(
         `INSERT INTO polls (creator_id, title, description, location_type, location_name, category)

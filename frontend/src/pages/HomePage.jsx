@@ -92,6 +92,11 @@ function HomePage() {
                   ))}
                 </div>
               )}
+              {poll.category && (
+                <div className="poll-category">
+                  <span className="category-badge">{poll.category}</span>
+                </div>
+              )}
               <div className="poll-creator">
                 <span>Av {poll.creator_username}</span>
                 <span className="poll-date">{formatRelativeTime(poll.created_at)}</span>

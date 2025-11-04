@@ -80,6 +80,13 @@ function PollDetailPage() {
       setHasVoted(true);
       setSelectedOption(optionId);
       fetchPoll(); // Refresh poll to get updated vote counts
+      
+      // Check for badges
+      try {
+        await api.post('/badges/check');
+      } catch (e) {
+        // Ignore badge check errors
+      }
     } catch (error) {
       alert(error.response?.data?.error || 'Feil ved stemmegiving');
     }
@@ -96,6 +103,13 @@ function PollDetailPage() {
       const response = await api.post(`/comments/poll/${id}`, { content: newComment });
       setComments([response.data.comment, ...comments]);
       setNewComment('');
+      
+      // Check for badges
+      try {
+        await api.post('/badges/check');
+      } catch (e) {
+        // Ignore badge check errors
+      }
     } catch (error) {
       alert(error.response?.data?.error || 'Feil ved opprettelse av kommentar');
     }

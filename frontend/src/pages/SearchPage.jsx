@@ -34,6 +34,7 @@ function SearchPage() {
       if (locationType) params.location_type = locationType;
       if (locationName) params.location_name = locationName;
       if (category) params.category = category;
+      if (category) params.category = category;
 
       const response = await api.get('/polls', { params });
       setPolls(response.data.polls);

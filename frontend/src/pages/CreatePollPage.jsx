@@ -83,6 +83,13 @@ function CreatePollPage() {
       });
 
       navigate(`/poll/${response.data.poll_id}`);
+      
+      // Check for badges
+      try {
+        await api.post('/badges/check');
+      } catch (e) {
+        // Ignore badge check errors
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Feil ved opprettelse av poll');
     } finally {
@@ -144,6 +151,20 @@ function CreatePollPage() {
               />
             </div>
           )}
+
+          <div className="form-group">
+            <label htmlFor="category">Kategori (valgfritt)</label>
+            <select
+              id="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">Ingen kategori</option>
+              {categories.map(cat => (
+                <option key={cat.value} value={cat.value}>{cat.label}</option>
+              ))}
+            </select>
+          </div>
 
           <div className="form-group">
             <label>Alternativer * (minst 2)</label>
