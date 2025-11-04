@@ -1,0 +1,40 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import PollDetailPage from './pages/PollDetailPage';
+import CreatePollPage from './pages/CreatePollPage';
+import ProfilePage from './pages/ProfilePage';
+import PoliticianSearchPage from './pages/PoliticianSearchPage';
+import SearchPage from './pages/SearchPage';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/poll/:id" element={<PollDetailPage />} />
+          <Route 
+            path="/create-poll" 
+            element={
+              <ProtectedRoute>
+                <CreatePollPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/profile/:id" element={<ProfilePage />} />
+          <Route path="/politician-search" element={<PoliticianSearchPage />} />
+          <Route path="/search" element={<SearchPage />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+

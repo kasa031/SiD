@@ -1,0 +1,130 @@
+.home-page {
+  width: 100%;
+}
+
+.hero-section {
+  text-align: center;
+  padding: var(--spacing-xxl) 0;
+  margin-bottom: var(--spacing-xxl);
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  color: var(--color-blue);
+  margin-bottom: var(--spacing-md);
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.polls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.poll-card {
+  background-color: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.poll-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.poll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.poll-header h2 {
+  font-size: 1.3rem;
+  color: var(--color-blue);
+  margin: 0;
+  flex: 1;
+}
+
+.location-badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.location-badge.by {
+  background-color: var(--color-green);
+  color: var(--text-light);
+}
+
+.location-badge.land {
+  background-color: var(--color-blue);
+  color: var(--text-light);
+}
+
+.poll-description {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  flex: 1;
+}
+
+.poll-stats {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.politician-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.tag {
+  background-color: var(--color-yellow);
+  color: var(--text-dark);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.poll-creator {
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.poll-date {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.loading, .no-polls {
+  text-align: center;
+  padding: var(--spacing-xxl);
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+

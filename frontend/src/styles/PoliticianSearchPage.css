@@ -1,0 +1,51 @@
+.politician-search-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.politician-search-card {
+  background-color: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.politician-search-card h1 {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-blue);
+}
+
+.description {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+}
+
+.politician-search-form {
+  margin-top: var(--spacing-lg);
+}
+
+.search-input-group {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.search-input {
+  flex: 1;
+  padding: var(--spacing-md);
+}
+
+.search-results {
+  margin-top: var(--spacing-xl);
+}
+
+.search-results h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-primary);
+}
+
+.tag.highlighted {
+  background-color: var(--color-red);
+  color: var(--text-light);
+}
+

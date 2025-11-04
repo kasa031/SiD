@@ -1,0 +1,81 @@
+.create-poll-page {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.create-poll-card {
+  background-color: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.create-poll-card h1 {
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-blue);
+}
+
+.option-input-group {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.option-input-group input {
+  flex: 1;
+}
+
+.remove-button {
+  background-color: var(--color-red);
+  color: var(--text-light);
+  width: 40px;
+  padding: 0;
+  border-radius: var(--radius-md);
+}
+
+.tag-input-group {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.tag-input-group input {
+  flex: 1;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.tag {
+  background-color: var(--color-yellow);
+  color: var(--text-dark);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.tag-remove {
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag-remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+}
+
