@@ -63,7 +63,6 @@ function CreatePollPage() {
     const titleError = validatePollTitle(title);
     if (titleError) {
       setValidationErrors({ title: titleError });
-    if (titleError) {
       setError(titleError);
       return;
     }
