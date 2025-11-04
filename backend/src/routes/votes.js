@@ -59,7 +59,7 @@ router.post('/:pollId', authenticateToken, async (req, res) => {
 
       await client.query('COMMIT');
 
-      res.json({ message: 'Stemme registrert' });
+      res.json({ message: 'Stemme registrert', check_badges: true });
     } catch (error) {
       await client.query('ROLLBACK');
       throw error;

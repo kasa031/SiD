@@ -9,11 +9,23 @@ function CreatePollPage() {
   const [description, setDescription] = useState('');
   const [locationType, setLocationType] = useState('land');
   const [locationName, setLocationName] = useState('');
+  const [category, setCategory] = useState('');
   const [options, setOptions] = useState(['', '']);
   const [politicianTags, setPoliticianTags] = useState([]);
   const [newTag, setNewTag] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  
+  const categories = [
+    { value: 'miljo', label: 'Miljø' },
+    { value: 'samfunn', label: 'Samfunn' },
+    { value: 'helse', label: 'Helse' },
+    { value: 'utdanning', label: 'Utdanning' },
+    { value: 'transport', label: 'Transport' },
+    { value: 'okonomi', label: 'Økonomi' },
+    { value: 'politikk', label: 'Politikk' },
+    { value: 'kultur', label: 'Kultur' }
+  ];
 
   const handleAddOption = () => {
     setOptions([...options, '']);
@@ -65,6 +77,7 @@ function CreatePollPage() {
         description: description.trim() || null,
         location_type: locationType,
         location_name: locationType === 'by' ? locationName.trim() : null,
+        category: category || null,
         options: validOptions,
         politician_tags: politicianTags,
       });

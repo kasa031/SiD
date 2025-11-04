@@ -112,6 +112,31 @@
 
   .profile-stats {
     justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    padding: var(--spacing-md);
+  }
+
+  .profile-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .profile-stats {
+    flex-direction: column;
+    gap: var(--spacing-md);
   }
 }
 

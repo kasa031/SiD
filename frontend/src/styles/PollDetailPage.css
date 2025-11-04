@@ -181,3 +181,38 @@
   color: var(--color-red);
 }
 
+@media (max-width: 768px) {
+  .poll-detail-card {
+    padding: var(--spacing-md);
+  }
+
+  .poll-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .poll-detail-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .option-header {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .vote-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .poll-detail-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .vote-bar-container {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+}
+

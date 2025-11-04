@@ -40,6 +40,7 @@ function Layout({ children }) {
           <nav className="nav">
             <Link to="/">Hjem</Link>
             <Link to="/search">Søk</Link>
+            <Link to="/stats">Statistikk</Link>
             {user ? (
               <>
                 <Link to="/create-poll">Opprett Poll</Link>

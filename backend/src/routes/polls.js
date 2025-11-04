@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     let query = `
       SELECT 
         p.id, p.title, p.description, p.location_type, p.location_name,
-        p.created_at, p.ends_at,
+        p.category, p.created_at, p.ends_at,
         u.username as creator_username, u.profile_picture_url as creator_picture,
         (SELECT COUNT(*) FROM poll_options WHERE poll_id = p.id) as options_count,
         (SELECT COUNT(*) FROM votes WHERE poll_id = p.id) as total_votes
@@ -26,6 +26,12 @@ router.get('/', async (req, res) => {
       paramCount++;
       query += ` AND (p.title ILIKE $${paramCount} OR p.description ILIKE $${paramCount})`;
       params.push(`%${search}%`);
+    }
+
+    if (req.query.category) {
+      paramCount++;
+      query += ` AND p.category = $${paramCount}`;
+      params.push(req.query.category);
     }
 
     if (location_type) {
@@ -130,7 +136,7 @@ router.get('/:id', async (req, res) => {
 // Opprett ny poll (kun innloggede brukere)
 router.post('/', authenticateToken, async (req, res) => {
   try {
-    const { title, description, location_type, location_name, options, politician_tags } = req.body;
+    const { title, description, location_type, location_name, options, politician_tags, category } = req.body;
     const userId = req.user.id;
 
     if (!title || !options || options.length < 2) {
@@ -152,9 +158,9 @@ router.post('/', authenticateToken, async (req, res) => {
 
       // Opprett poll
       const pollResult = await client.query(
-        `INSERT INTO polls (creator_id, title, description, location_type, location_name)
-         VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-        [userId, title, description || null, location_type, location_name || null]
+        `INSERT INTO polls (creator_id, title, description, location_type, location_name, category)
+         VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+        [userId, title, description || null, location_type, location_name || null, category || null]
       );
 
       const pollId = pollResult.rows[0].id;

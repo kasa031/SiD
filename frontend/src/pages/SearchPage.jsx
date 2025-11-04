@@ -7,12 +7,24 @@ function SearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [locationType, setLocationType] = useState('');
   const [locationName, setLocationName] = useState('');
+  const [category, setCategory] = useState('');
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  const categories = [
+    { value: 'miljo', label: 'Miljø' },
+    { value: 'samfunn', label: 'Samfunn' },
+    { value: 'helse', label: 'Helse' },
+    { value: 'utdanning', label: 'Utdanning' },
+    { value: 'transport', label: 'Transport' },
+    { value: 'okonomi', label: 'Økonomi' },
+    { value: 'politikk', label: 'Politikk' },
+    { value: 'kultur', label: 'Kultur' }
+  ];
 
   useEffect(() => {
     performSearch();
-  }, [locationType, locationName]);
+  }, [locationType, locationName, category]);
 
   const performSearch = async () => {
     setLoading(true);
@@ -21,6 +33,7 @@ function SearchPage() {
       if (searchTerm) params.search = searchTerm;
       if (locationType) params.location_type = locationType;
       if (locationName) params.location_name = locationName;
+      if (category) params.category = category;
 
       const response = await api.get('/polls', { params });
       setPolls(response.data.polls);
@@ -78,6 +91,22 @@ function SearchPage() {
               />
             </div>
           )}
+          
+          <div className="filter-group">
+            <label htmlFor="category">Kategori</label>
+            <select
+              id="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">Alle kategorier</option>
+              {categories.map((cat) => (
+                <option key={cat.value} value={cat.value}>
+                  {cat.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </form>
 

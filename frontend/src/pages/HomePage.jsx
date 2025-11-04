@@ -39,6 +39,9 @@ function HomePage() {
           </div>
           <div className="hero-image">
             <img src="/survey-poster.jpg" alt="Polls og meningsmålinger" />
+            <div className="hero-gif">
+              <img src="/Democracy.gif" alt="Demokrati" className="hero-gif-overlay" />
+            </div>
           </div>
         </div>
       </div>
@@ -46,6 +49,7 @@ function HomePage() {
       <div className="polls-grid">
         {polls.length === 0 ? (
           <div className="no-polls">
+            <img src="/checklist-paper-green-tick.jpg" alt="Ingen polls" className="empty-state-image" />
             <p>Ingen polls ennå. Vær den første til å opprette en!</p>
           </div>
         ) : (
@@ -53,9 +57,23 @@ function HomePage() {
             <Link key={poll.id} to={`/poll/${poll.id}`} className="poll-card">
               <div className="poll-header">
                 <h2>{poll.title}</h2>
-                <span className={`location-badge ${poll.location_type}`}>
-                  {poll.location_type === 'by' ? poll.location_name : 'Hele landet'}
-                </span>
+                <div className="poll-badges">
+                  <span className={`location-badge ${poll.location_type}`}>
+                    {poll.location_type === 'by' ? poll.location_name : 'Hele landet'}
+                  </span>
+                  {poll.category && (
+                    <span className="category-badge">
+                      {poll.category === 'miljo' ? 'Miljø' :
+                       poll.category === 'samfunn' ? 'Samfunn' :
+                       poll.category === 'helse' ? 'Helse' :
+                       poll.category === 'utdanning' ? 'Utdanning' :
+                       poll.category === 'transport' ? 'Transport' :
+                       poll.category === 'okonomi' ? 'Økonomi' :
+                       poll.category === 'politikk' ? 'Politikk' :
+                       poll.category === 'kultur' ? 'Kultur' : poll.category}
+                    </span>
+                  )}
+                </div>
               </div>
               {poll.description && (
                 <p className="poll-description">{poll.description}</p>

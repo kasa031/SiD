@@ -44,34 +44,52 @@ router.post('/poll/:pollId', authenticateToken, async (req, res) => {
       return res.status(404).json({ error: 'Poll ikke funnet' });
     }
 
-    // Opprett kommentar
-    const result = await pool.query(
-      `INSERT INTO comments (poll_id, user_id, content)
-       VALUES ($1, $2, $3)
-       RETURNING id, content, created_at`,
-      [pollId, userId, content.trim()]
-    );
+    // Start transaction
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
 
-    // Hent brukerinfo for kommentaren
-    const userResult = await pool.query(
-      'SELECT id, username, profile_picture_url FROM users WHERE id = $1',
-      [userId]
-    );
+      // Opprett kommentar
+      const result = await client.query(
+        `INSERT INTO comments (poll_id, user_id, content)
+         VALUES ($1, $2, $3)
+         RETURNING id, content, created_at`,
+        [pollId, userId, content.trim()]
+      );
 
-    res.status(201).json({
-      message: 'Kommentar lagt til',
-      comment: {
-        ...result.rows[0],
-        user_id: userResult.rows[0].id,
-        username: userResult.rows[0].username,
-        profile_picture_url: userResult.rows[0].profile_picture_url,
-      },
-    });
-  } catch (error) {
-    console.error('Legg til kommentar feil:', error);
-    res.status(500).json({ error: 'Serverfeil ved opprettelse av kommentar' });
-  }
-});
+      // Oppdater user stats
+      await client.query(
+        `INSERT INTO user_stats (user_id, total_comments)
+         VALUES ($1, 1)
+         ON CONFLICT (user_id) 
+         DO UPDATE SET total_comments = user_stats.total_comments + 1`,
+        [userId]
+      );
+
+      await client.query('COMMIT');
+
+      // Hent brukerinfo for kommentaren
+      const userResult = await pool.query(
+        'SELECT id, username, profile_picture_url FROM users WHERE id = $1',
+        [userId]
+      );
+
+      res.status(201).json({
+        message: 'Kommentar lagt til',
+        comment: {
+          ...result.rows[0],
+          user_id: userResult.rows[0].id,
+          username: userResult.rows[0].username,
+          profile_picture_url: userResult.rows[0].profile_picture_url,
+        },
+      });
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+
 
 export default router;
 

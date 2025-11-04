@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { getAvatarUrl } from '../utils/avatar';
+import BadgeDisplay from '../components/BadgeDisplay';
 import '../styles/ProfilePage.css';
 
 function ProfilePage() {
@@ -136,6 +137,8 @@ function ProfilePage() {
             <span className="stat-label">Stemmer gitt</span>
           </div>
         </div>
+
+        <BadgeDisplay userId={user.id} />
       </div>
     </div>
   );

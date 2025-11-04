@@ -75,6 +75,42 @@
   .nav {
     flex-wrap: wrap;
     justify-content: center;
+    gap: var(--spacing-sm);
+    font-size: 0.9rem;
+  }
+
+  .nav a {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .header-content {
+    padding: 0 var(--spacing-md);
+  }
+
+  .nav {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-xs);
+  }
+
+  .nav a, .nav button {
+    width: 100%;
+    text-align: center;
+    padding: var(--spacing-sm);
+  }
+
+  .main-content {
+    padding: var(--spacing-md);
   }
 }
 

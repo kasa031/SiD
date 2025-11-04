@@ -9,6 +9,7 @@ import CreatePollPage from './pages/CreatePollPage';
 import ProfilePage from './pages/ProfilePage';
 import PoliticianSearchPage from './pages/PoliticianSearchPage';
 import SearchPage from './pages/SearchPage';
+import StatsPage from './pages/StatsPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/poll/:id" element={<PollDetailPage />} />
+          <Route path="/poll/:pollId/stats" element={<StatsPage />} />
           <Route 
             path="/create-poll" 
             element={
@@ -30,6 +32,7 @@ function App() {
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/politician-search" element={<PoliticianSearchPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/stats" element={<StatsPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
