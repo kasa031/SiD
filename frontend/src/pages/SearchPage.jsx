@@ -111,7 +111,10 @@ function SearchPage() {
       </form>
 
       {loading ? (
-        <div className="loading">Søker...</div>
+        <div className="loading">
+          <img src="/mobile-phone-check-list.jpg" alt="Søker" className="loading-image" />
+          <p>Søker...</p>
+        </div>
       ) : (
         <div className="search-results">
           <h2>Resultater ({polls.length})</h2>

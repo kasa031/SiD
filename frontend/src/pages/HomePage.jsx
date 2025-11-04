@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
+import InspirationBanner from '../components/InspirationBanner';
 import { formatRelativeTime } from '../utils/date';
 import '../styles/HomePage.css';
 
@@ -45,6 +46,8 @@ function HomePage() {
           </div>
         </div>
       </div>
+
+      <InspirationBanner />
 
       <div className="polls-grid">
         {polls.length === 0 ? (
