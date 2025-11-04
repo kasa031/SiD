@@ -93,7 +93,7 @@ router.get('/:id', async (req, res) => {
 
     const pollResult = await pool.query(
       `SELECT 
-        p.id, p.title, p.description, p.location_type, p.location_name,
+        p.id, p.title, p.description, p.location_type, p.location_name, p.category,
         p.created_at, p.ends_at,
         u.username as creator_username, u.profile_picture_url as creator_picture
       FROM polls p
