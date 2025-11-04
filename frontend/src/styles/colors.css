@@ -1,21 +1,21 @@
 /* Knalle farger med kontrast-hensyn */
 :root {
-  /* Primærfarger - knalle farger */
-  --color-red: #FF3366;
-  --color-red-dark: #CC0033;
-  --color-red-light: #FF6699;
+  /* Primærfarger - profesjonelle, knalle farger med bedre kontrast */
+  --color-red: #E63946;
+  --color-red-dark: #C1121F;
+  --color-red-light: #F77F7F;
   
-  --color-green: #00CC66;
-  --color-green-dark: #009944;
-  --color-green-light: #33FF99;
+  --color-green: #06A77D;
+  --color-green-dark: #048A6E;
+  --color-green-light: #3FC99C;
   
-  --color-blue: #0066FF;
-  --color-blue-dark: #0044CC;
-  --color-blue-light: #3388FF;
+  --color-blue: #1E40AF;
+  --color-blue-dark: #1E3A8A;
+  --color-blue-light: #3B82F6;
   
-  --color-yellow: #FFCC00;
-  --color-yellow-dark: #CC9900;
-  --color-yellow-light: #FFDD33;
+  --color-yellow: #F59E0B;
+  --color-yellow-dark: #D97706;
+  --color-yellow-light: #FBBF24;
   
   /* Bakgrunnsfarger */
   --bg-primary: #ffffff;

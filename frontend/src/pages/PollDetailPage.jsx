@@ -117,7 +117,7 @@ function PollDetailPage() {
         <div className="poll-detail-header">
           <h1>{poll.title}</h1>
           <span className={`location-badge ${poll.location_type}`}>
-            {poll.location_type === 'by' ? `📍 ${poll.location_name}` : '🇳🇴 Hele landet'}
+            {poll.location_type === 'by' ? poll.location_name : 'Hele landet'}
           </span>
         </div>
 

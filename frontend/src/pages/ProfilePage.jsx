@@ -102,7 +102,7 @@ function ProfilePage() {
                   style={{ display: 'none' }}
                 />
                 <label htmlFor="profile-picture-input" className="upload-button">
-                  📷 Endre bilde
+                  Endre bilde
                 </label>
                 {file && (
                   <div className="upload-actions">

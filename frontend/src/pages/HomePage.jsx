@@ -31,8 +31,16 @@ function HomePage() {
   return (
     <div className="home-page">
       <div className="hero-section">
-        <h1>Velkommen til Polls</h1>
-        <p>Kobler folket og politikere sammen gjennom meningsmålinger</p>
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1>Velkommen til Polls</h1>
+            <p>En plattform som kobler folket og politikere sammen gjennom meningsmålinger og dialog</p>
+            <p className="hero-subtitle">Din stemme teller. La din mening bli hørt.</p>
+          </div>
+          <div className="hero-image">
+            <img src="/survey-poster.jpg" alt="Polls og meningsmålinger" />
+          </div>
+        </div>
       </div>
 
       <div className="polls-grid">
@@ -46,7 +54,7 @@ function HomePage() {
               <div className="poll-header">
                 <h2>{poll.title}</h2>
                 <span className={`location-badge ${poll.location_type}`}>
-                  {poll.location_type === 'by' ? `📍 ${poll.location_name}` : '🇳🇴 Hele landet'}
+                  {poll.location_type === 'by' ? poll.location_name : 'Hele landet'}
                 </span>
               </div>
               {poll.description && (

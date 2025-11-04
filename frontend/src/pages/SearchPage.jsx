@@ -95,7 +95,7 @@ function SearchPage() {
                   <div className="poll-header">
                     <h2>{poll.title}</h2>
                     <span className={`location-badge ${poll.location_type}`}>
-                      {poll.location_type === 'by' ? `📍 ${poll.location_name}` : '🇳🇴 Hele landet'}
+                      {poll.location_type === 'by' ? poll.location_name : 'Hele landet'}
                     </span>
                   </div>
                   {poll.description && (

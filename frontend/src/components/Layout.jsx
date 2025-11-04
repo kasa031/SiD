@@ -35,7 +35,7 @@ function Layout({ children }) {
       <header className="header">
         <div className="header-content">
           <Link to="/" className="logo">
-            🗳️ Polls
+            Polls
           </Link>
           <nav className="nav">
             <Link to="/">Hjem</Link>

@@ -19,6 +19,8 @@
   margin-bottom: var(--spacing-xl);
   color: var(--color-blue);
   text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .form-group {
