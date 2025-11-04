@@ -90,6 +90,20 @@
   min-width: 120px;
 }
 
+.poll-category-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.poll-category-section .category-badge {
+  background-color: var(--color-blue);
+  color: var(--text-light);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
 .poll-meta {
   margin-top: var(--spacing-lg);
   padding-top: var(--spacing-lg);

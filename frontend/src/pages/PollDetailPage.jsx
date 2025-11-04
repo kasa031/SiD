@@ -139,6 +139,21 @@ function PollDetailPage() {
           <p className="poll-description">{poll.description}</p>
         )}
 
+        {poll.category && (
+          <div className="poll-category-section">
+            <span className="category-badge">
+              {poll.category === 'miljo' ? 'Miljø' :
+               poll.category === 'samfunn' ? 'Samfunn' :
+               poll.category === 'helse' ? 'Helse' :
+               poll.category === 'utdanning' ? 'Utdanning' :
+               poll.category === 'transport' ? 'Transport' :
+               poll.category === 'okonomi' ? 'Økonomi' :
+               poll.category === 'politikk' ? 'Politikk' :
+               poll.category === 'kultur' ? 'Kultur' : poll.category}
+            </span>
+          </div>
+        )}
+
         {poll.politician_tags && poll.politician_tags.length > 0 && (
           <div className="politician-tags">
             <strong>Politikere:</strong>
