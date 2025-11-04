@@ -35,4 +35,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./frontend/dist
           cname: false
+          # Deploy to root branch if configured, otherwise use default
+          destination_dir: /
 
