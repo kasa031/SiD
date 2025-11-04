@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { validatePollTitle, validateComment } from '../utils/validation';
 import '../styles/CreatePollPage.css';
 
 function CreatePollPage() {
@@ -57,6 +58,15 @@ function CreatePollPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setValidationErrors({});
+
+    const titleError = validatePollTitle(title);
+    if (titleError) {
+      setValidationErrors({ title: titleError });
+    if (titleError) {
+      setError(titleError);
+      return;
+    }
 
     const validOptions = options.filter(opt => opt.trim().length > 0);
     if (validOptions.length < 2) {
@@ -83,6 +93,7 @@ function CreatePollPage() {
       });
 
       navigate(`/poll/${response.data.poll_id}`);
+      window.showToast?.('Poll opprettet!', 'success');
       
       // Check for badges
       try {
@@ -91,7 +102,9 @@ function CreatePollPage() {
         // Ignore badge check errors
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Feil ved opprettelse av poll');
+      const errorMsg = err.response?.data?.error || 'Feil ved opprettelse av poll';
+      setError(errorMsg);
+      window.showToast?.(errorMsg, 'error');
     } finally {
       setLoading(false);
     }
@@ -109,10 +122,18 @@ function CreatePollPage() {
               type="text"
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (validationErrors.title) {
+                  setValidationErrors({ ...validationErrors, title: null });
+                }
+              }}
               required
               placeholder="Hva skal pollen handle om?"
             />
+            {validationErrors.title && (
+              <span className="validation-error">{validationErrors.title}</span>
+            )}
           </div>
 
           <div className="form-group">

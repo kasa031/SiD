@@ -21,14 +21,20 @@ function StatsPage() {
       
       // Fetch city comparison if we have cities
       if (response.data.by_city && response.data.by_city.length > 0) {
-        const topCities = response.data.by_city.slice(0, 3).map(c => c.city);
-        const comparisonResponse = await api.get('/stats/city-comparison', {
-          params: { cities: topCities.join(',') }
-        });
-        setCityComparison(comparisonResponse.data.comparison);
+        try {
+          const topCities = response.data.by_city.slice(0, 3).map(c => c.city);
+          const comparisonResponse = await api.get('/stats/city-comparison', {
+            params: { cities: topCities.join(',') }
+          });
+          setCityComparison(comparisonResponse.data.comparison);
+        } catch (e) {
+          // Ignore comparison errors
+          console.error('Kunne ikke hente by-sammenligning:', e);
+        }
       }
     } catch (error) {
       console.error('Feil ved henting av statistikk:', error);
+      window.showToast?.('Kunne ikke laste statistikk. Prøv igjen senere.', 'error');
     } finally {
       setLoading(false);
     }

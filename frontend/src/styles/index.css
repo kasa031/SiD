@@ -55,6 +55,16 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+input:invalid, textarea:invalid {
+  border-color: var(--color-red);
+}
+
+input:invalid:focus, textarea:invalid:focus {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
 }
 
 .card {

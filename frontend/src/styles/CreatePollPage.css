@@ -79,3 +79,10 @@
   border-radius: var(--radius-sm);
 }
 
+.validation-error {
+  display: block;
+  color: var(--color-red);
+  font-size: 0.85rem;
+  margin-top: var(--spacing-xs);
+}
+

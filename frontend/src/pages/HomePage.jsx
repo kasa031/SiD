@@ -20,6 +20,7 @@ function HomePage() {
       setPolls(response.data.polls);
     } catch (error) {
       console.error('Feil ved henting av polls:', error);
+      window.showToast?.('Kunne ikke laste polls. Prøv igjen senere.', 'error');
     } finally {
       setLoading(false);
     }

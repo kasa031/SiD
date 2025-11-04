@@ -19,8 +19,11 @@ function Layout({ children }) {
       const response = await api.get('/auth/me');
       setUser(response.data.user);
     } catch (error) {
-      localStorage.removeItem('token');
-      setUser(null);
+      // Only clear token if it's actually invalid (401)
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+        setUser(null);
+      }
     }
   };
 

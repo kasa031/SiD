@@ -71,7 +71,7 @@ function PollDetailPage() {
     }
 
     if (hasVoted) {
-      alert('Du har allerede stemt på denne poll');
+      window.showToast?.('Du har allerede stemt på denne poll', 'warning');
       return;
     }
 
@@ -80,6 +80,7 @@ function PollDetailPage() {
       setHasVoted(true);
       setSelectedOption(optionId);
       fetchPoll(); // Refresh poll to get updated vote counts
+      window.showToast?.('Stemme registrert!', 'success');
       
       // Check for badges
       try {
@@ -88,7 +89,7 @@ function PollDetailPage() {
         // Ignore badge check errors
       }
     } catch (error) {
-      alert(error.response?.data?.error || 'Feil ved stemmegiving');
+      window.showToast?.(error.response?.data?.error || 'Feil ved stemmegiving', 'error');
     }
   };
 
@@ -99,10 +100,17 @@ function PollDetailPage() {
       return;
     }
 
+    const commentError = validateComment(newComment);
+    if (commentError) {
+      window.showToast?.(commentError, 'error');
+      return;
+    }
+
     try {
       const response = await api.post(`/comments/poll/${id}`, { content: newComment });
       setComments([response.data.comment, ...comments]);
       setNewComment('');
+      window.showToast?.('Kommentar lagt til', 'success');
       
       // Check for badges
       try {
@@ -111,7 +119,7 @@ function PollDetailPage() {
         // Ignore badge check errors
       }
     } catch (error) {
-      alert(error.response?.data?.error || 'Feil ved opprettelse av kommentar');
+      window.showToast?.(error.response?.data?.error || 'Feil ved opprettelse av kommentar', 'error');
     }
   };
 

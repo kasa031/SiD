@@ -62,9 +62,9 @@ function ProfilePage() {
       fetchUser();
       fetchCurrentUser();
       setFile(null);
-      alert('Profilbilde opplastet!');
+      window.showToast?.('Profilbilde opplastet!', 'success');
     } catch (error) {
-      alert(error.response?.data?.error || 'Feil ved opplasting');
+      window.showToast?.(error.response?.data?.error || 'Feil ved opplasting', 'error');
     } finally {
       setUploading(false);
     }

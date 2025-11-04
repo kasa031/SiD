@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorBoundary from './components/ErrorBoundary';
+import ToastContainer, { showToast } from './components/Toast';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -11,10 +13,15 @@ import PoliticianSearchPage from './pages/PoliticianSearchPage';
 import SearchPage from './pages/SearchPage';
 import StatsPage from './pages/StatsPage';
 
+// Make showToast available globally
+window.showToast = showToast;
+
 function App() {
   return (
-    <BrowserRouter>
-      <Layout>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Layout>
+          <ToastContainer />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -34,8 +41,9 @@ function App() {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/stats" element={<StatsPage />} />
         </Routes>
-      </Layout>
-    </BrowserRouter>
+        </Layout>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 

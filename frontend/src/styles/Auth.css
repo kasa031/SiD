@@ -39,6 +39,13 @@
   padding: var(--spacing-md);
 }
 
+.validation-error {
+  display: block;
+  color: var(--color-red);
+  font-size: 0.85rem;
+  margin-top: var(--spacing-xs);
+}
+
 .error-message {
   background-color: var(--color-red);
   color: var(--text-light);
