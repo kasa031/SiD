@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
 import { getAvatarUrl } from '../utils/avatar';
+import { validateComment } from '../utils/validation';
 import '../styles/PollDetailPage.css';
 
 function PollDetailPage() {
