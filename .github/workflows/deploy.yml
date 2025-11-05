@@ -27,7 +27,12 @@ jobs:
       - name: Build frontend
         run: |
           cd frontend
+          npm install
           npm run build
+        env:
+          # TODO: Replace with your actual backend URL after deploying to Railway/Render
+          # Example: VITE_API_URL: https://your-app.railway.app/api
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://your-backend-url.railway.app/api' }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
