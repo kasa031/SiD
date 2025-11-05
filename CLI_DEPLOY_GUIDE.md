@@ -56,11 +56,29 @@ npm run deploy:force
 
 ## ⚙️ Environment Variables
 
-For å sette `VITE_API_URL` før deploy:
+For å sette `VITE_API_URL` før deploy (når backend er deployet til Railway):
+
+### Windows PowerShell:
+```powershell
+cd frontend
+$env:VITE_API_URL="https://din-railway-url.railway.app/api"; npm run deploy
+```
+
+### Windows CMD:
+```cmd
+cd frontend
+set VITE_API_URL=https://din-railway-url.railway.app/api && npm run deploy
+```
+
+### Mac/Linux:
 ```bash
 cd frontend
 VITE_API_URL=https://din-railway-url.railway.app/api npm run deploy
 ```
+
+**Hvis backend ikke er deployet ennå:**
+- Frontend vil bruke fallback URL fra `frontend/src/services/api.js`
+- Du kan deploye uten `VITE_API_URL` og oppdatere senere
 
 ## 🎯 Ferdig!
 
