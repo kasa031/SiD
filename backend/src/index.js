@@ -58,6 +58,7 @@ import voteRoutes from './routes/votes.js';
 import commentRoutes from './routes/comments.js';
 import statsRoutes from './routes/stats.js';
 import badgeRoutes from './routes/badges.js';
+import aiRoutes from './routes/ai.js';
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -71,6 +72,7 @@ app.use('/api/votes', voteRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/badges', badgeRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server kjører på http://localhost:${PORT}`);
