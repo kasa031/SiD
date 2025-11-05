@@ -6,9 +6,13 @@ import { dirname, join } from 'path';
 import { securityHeaders, sanitizeInput, apiLimiter } from './middleware/security.js';
 
 // Load environment variables
+// Railway sets env vars automatically, so only load from file in local development
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-dotenv.config({ path: join(__dirname, '../env') });
+if (!process.env.DATABASE_URL) {
+  // Only load from file if DATABASE_URL is not set (local dev)
+  dotenv.config({ path: join(__dirname, '../env') });
+}
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -74,7 +78,16 @@ app.use('/api/stats', statsRoutes);
 app.use('/api/badges', badgeRoutes);
 app.use('/api/ai', aiRoutes);
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server kjører på http://localhost:${PORT}`);
+// Railway sets PORT automatically, listen on all interfaces
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server kjører på port ${PORT}`);
+});
+
+// Graceful shutdown for Railway
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+  });
 });
 
