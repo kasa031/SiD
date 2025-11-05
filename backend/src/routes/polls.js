@@ -1,6 +1,8 @@
 import express from 'express';
 import pool from '../utils/db.js';
 import { authenticateToken } from '../middleware/auth.js';
+import { pollCreationLimiter } from '../middleware/security.js';
+import { validatePollTitle, validateLocationName, sanitizeString } from '../utils/validation.js';
 
 const router = express.Router();
 
@@ -174,17 +176,28 @@ router.post('/', authenticateToken, async (req, res) => {
 
       const pollId = pollResult.rows[0].id;
 
-      // Opprett options
-      for (const optionText of options) {
+      // Opprett options (use sanitized options)
+      const sanitizedOptions = options
+        .map(opt => sanitizeString(String(opt)))
+        .filter(opt => opt.length > 0);
+      
+      for (const optionText of sanitizedOptions) {
         await client.query(
           'INSERT INTO poll_options (poll_id, option_text) VALUES ($1, $2)',
           [pollId, optionText]
         );
       }
 
-      // Opprett politician tags
-      if (politician_tags && politician_tags.length > 0) {
-        for (const politicianName of politician_tags) {
+      // Opprett politician tags (use sanitized tags)
+      let sanitizedTags = [];
+      if (politician_tags && Array.isArray(politician_tags)) {
+        sanitizedTags = politician_tags
+          .map(tag => sanitizeString(String(tag)))
+          .filter(tag => tag.length > 0 && tag.length <= 100);
+      }
+      
+      if (sanitizedTags.length > 0) {
+        for (const politicianName of sanitizedTags) {
           await client.query(
             'INSERT INTO politician_tags (poll_id, politician_name) VALUES ($1, $2)',
             [pollId, politicianName]

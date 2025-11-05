@@ -1,6 +1,7 @@
 import express from 'express';
 import pool from '../utils/db.js';
 import { authenticateToken } from '../middleware/auth.js';
+import { validateComment, sanitizeString } from '../utils/validation.js';
 
 const router = express.Router();
 
@@ -31,12 +32,17 @@ router.get('/poll/:pollId', async (req, res) => {
 router.post('/poll/:pollId', authenticateToken, async (req, res) => {
   try {
     const pollId = parseInt(req.params.pollId);
-    const { content } = req.body;
+    let { content } = req.body;
     const userId = req.user.id;
 
-    if (!content || content.trim().length === 0) {
-      return res.status(400).json({ error: 'Kommentar kan ikke være tom' });
+    // Validate comment
+    const commentError = validateComment(content);
+    if (commentError) {
+      return res.status(400).json({ error: commentError });
     }
+
+    // Sanitize content
+    content = sanitizeString(content);
 
     // Sjekk om poll eksisterer
     const pollResult = await pool.query('SELECT id FROM polls WHERE id = $1', [pollId]);

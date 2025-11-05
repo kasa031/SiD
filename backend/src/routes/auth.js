@@ -5,6 +5,8 @@ import pool from '../utils/db.js';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { authLimiter } from '../middleware/security.js';
+import { validateUsername, validatePassword, validateEmail, sanitizeString } from '../utils/validation.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,13 +15,29 @@ dotenv.config({ path: join(__dirname, '../../env') });
 const router = express.Router();
 
 // Registrering
-router.post('/register', async (req, res) => {
+router.post('/register', authLimiter, async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    let { username, password, email } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Brukernavn og passord er påkrevd' });
+    // Validate input
+    const usernameError = validateUsername(username);
+    if (usernameError) {
+      return res.status(400).json({ error: usernameError });
     }
+
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      return res.status(400).json({ error: passwordError });
+    }
+
+    const emailError = validateEmail(email);
+    if (emailError) {
+      return res.status(400).json({ error: emailError });
+    }
+
+    // Sanitize input
+    username = sanitizeString(username);
+    email = email ? sanitizeString(email) : null;
 
     // Sjekk om bruker eksisterer
     const existingUser = await pool.query(
@@ -42,11 +60,11 @@ router.post('/register', async (req, res) => {
 
     const user = result.rows[0];
 
-    // Generer JWT token
+    // Generer JWT token with shorter expiration
     const token = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '24h' } // Changed from 7d to 24h for better security
     );
 
     res.status(201).json({
@@ -65,13 +83,16 @@ router.post('/register', async (req, res) => {
 });
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
   try {
-    const { username, password } = req.body;
+    let { username, password } = req.body;
 
     if (!username || !password) {
       return res.status(400).json({ error: 'Brukernavn og passord er påkrevd' });
     }
+
+    // Sanitize input
+    username = sanitizeString(username);
 
     // Finn bruker
     const result = await pool.query(
@@ -92,11 +113,11 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Ugyldig brukernavn eller passord' });
     }
 
-    // Generer JWT token
+    // Generer JWT token with shorter expiration
     const token = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '24h' } // Changed from 7d to 24h for better security
     );
 
     res.json({
