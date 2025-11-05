@@ -19,7 +19,12 @@
 1. Klikk **"New Project"**
 2. Klikk **"Deploy from GitHub repo"**
 3. Velg **`kasa031/SiD`** repository
-4. Railway starter automatisk deploy!
+4. **VIKTIG:** Etter at Railway har valgt repository:
+   - Gå til backend service → **"Settings"**
+   - Scroll ned til **"Root Directory"**
+   - Sett til: **`backend`**
+   - Klikk **"Save"**
+5. Railway starter automatisk deploy!
    - Vent 2-3 minutter mens Railway bygger
    - Se "Deployments" tab for status
 
