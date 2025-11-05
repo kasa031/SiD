@@ -24,12 +24,11 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
-          npm install
+          npm ci
 
       - name: Build frontend
         run: |
           cd frontend
-          npm install
           npm run build
         env:
           # TODO: Replace with your actual backend URL after deploying to Railway/Render
