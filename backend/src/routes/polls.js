@@ -136,12 +136,32 @@ router.get('/:id', async (req, res) => {
 });
 
 // Opprett ny poll (kun innloggede brukere)
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, pollCreationLimiter, async (req, res) => {
   try {
-    const { title, description, location_type, location_name, options, politician_tags, category } = req.body;
+    let { title, description, location_type, location_name, options, politician_tags, category } = req.body;
     const userId = req.user.id;
 
-    if (!title || !options || options.length < 2) {
+    // Validate title
+    const titleError = validatePollTitle(title);
+    if (titleError) {
+      return res.status(400).json({ error: titleError });
+    }
+
+    // Validate location_name if provided
+    if (location_type === 'by' && location_name) {
+      const locationError = validateLocationName(location_name);
+      if (locationError) {
+        return res.status(400).json({ error: locationError });
+      }
+    }
+
+    // Sanitize inputs
+    title = sanitizeString(title);
+    description = description ? sanitizeString(description) : null;
+    location_name = location_name ? sanitizeString(location_name) : null;
+    
+    // Validate and sanitize options
+    if (!Array.isArray(options) || options.length < 2) {
       return res.status(400).json({ 
         error: 'Tittel og minst 2 alternativer er påkrevd' 
       });
