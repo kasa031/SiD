@@ -6,7 +6,10 @@ import { dirname, join } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-dotenv.config({ path: join(__dirname, '../../env') });
+// Load env file only if not set (Railway sets env vars automatically)
+if (!process.env.OPENROUTER_API_KEY) {
+  dotenv.config({ path: join(__dirname, '../../env') });
+}
 
 const router = express.Router();
 
