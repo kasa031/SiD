@@ -10,8 +10,10 @@ yarn-error.log*
 backend/env
 *.env
 !*.env.example
+!backend/env.example
 env
 env.*
+!env.example
 
 # Build outputs
 dist/
