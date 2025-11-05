@@ -21,14 +21,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      - name: Install dependencies and build
         run: |
           cd frontend
-          npm ci
-
-      - name: Build frontend
-        run: |
-          cd frontend
+          npm install
           npm run build
         env:
           # TODO: Replace with your actual backend URL after deploying to Railway/Render
