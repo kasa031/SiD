@@ -24,7 +24,7 @@ async function runMigrations() {
     
     // Migration 1
     const migration1 = readFileSync(
-      join(__dirname, '../../database/migrations/001_initial_schema.sql'),
+      join(__dirname, '../database/migrations/001_initial_schema.sql'),
       'utf8'
     );
     console.log('📝 Kjører migration 001_initial_schema.sql...');
@@ -33,7 +33,7 @@ async function runMigrations() {
 
     // Migration 2
     const migration2 = readFileSync(
-      join(__dirname, '../../database/migrations/002_add_categories_and_badges.sql'),
+      join(__dirname, '../database/migrations/002_add_categories_and_badges.sql'),
       'utf8'
     );
     console.log('📝 Kjører migration 002_add_categories_and_badges.sql...');

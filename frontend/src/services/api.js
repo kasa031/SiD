@@ -9,11 +9,9 @@ const getApiUrl = () => {
     return import.meta.env.VITE_API_URL;
   }
   
-  // In production, use deployed backend URL
+  // In production, use deployed backend URL (Fly.io)
   if (import.meta.env.PROD) {
-    // TODO: Replace with your Railway/Render backend URL
-    // Example: 'https://your-app.railway.app/api'
-    return 'https://your-backend-url.railway.app/api';
+    return 'https://sid-backend.fly.dev/api';
   }
   
   // In development, use localhost

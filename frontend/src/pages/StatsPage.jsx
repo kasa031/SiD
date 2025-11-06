@@ -42,12 +42,13 @@ function StatsPage() {
 
   const categories = [
     { value: '', label: 'Alle kategorier' },
-    { value: 'miljø', label: 'Miljø' },
+    { value: 'miljo', label: 'Miljø' },
     { value: 'helse', label: 'Helse' },
     { value: 'utdanning', label: 'Utdanning' },
     { value: 'transport', label: 'Transport' },
-    { value: 'økonomi', label: 'Økonomi' },
-    { value: 'sosialt', label: 'Sosialt' },
+    { value: 'okonomi', label: 'Økonomi' },
+    { value: 'samfunn', label: 'Samfunn' },
+    { value: 'politikk', label: 'Politikk' },
     { value: 'kultur', label: 'Kultur' },
   ];
 

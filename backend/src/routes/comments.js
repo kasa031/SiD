@@ -95,7 +95,11 @@ router.post('/poll/:pollId', authenticateToken, async (req, res) => {
     } finally {
       client.release();
     }
-
+  } catch (error) {
+    console.error('Legg til kommentar feil:', error);
+    res.status(500).json({ error: 'Serverfeil ved oppretting av kommentar' });
+  }
+});
 
 export default router;
 
