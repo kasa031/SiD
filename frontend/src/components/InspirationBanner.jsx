@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import '../styles/InspirationBanner.css';
 
+const baseUrl = import.meta.env.BASE_URL || '/';
 const inspirationGifs = [
-  '/NoKings.gif',
-  '/Resist.gif',
-  '/letOurVotesBeHeard.gif',
+  `${baseUrl}NoKings.gif`,
+  `${baseUrl}Resist.gif`,
+  `${baseUrl}letOurVotesBeHeard.gif`,
 ];
 
 function InspirationBanner() {

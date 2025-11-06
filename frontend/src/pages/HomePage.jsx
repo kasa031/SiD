@@ -35,14 +35,14 @@ function HomePage() {
       <div className="hero-section">
         <div className="hero-content">
           <div className="hero-text">
-            <h1>Velkommen til Polls</h1>
+            <h1>Velkommen til SiD</h1>
             <p>En plattform som kobler folket og politikere sammen gjennom meningsmålinger og dialog</p>
             <p className="hero-subtitle">Din stemme teller. La din mening bli hørt.</p>
           </div>
           <div className="hero-image">
-            <img src="/survey-poster.jpg" alt="Polls og meningsmålinger" />
+            <img src={`${import.meta.env.BASE_URL}survey-poster.jpg`} alt="SiD og meningsmålinger" />
             <div className="hero-gif">
-              <img src="/Democracy.gif" alt="Demokrati" className="hero-gif-overlay" />
+              <img src={`${import.meta.env.BASE_URL}Democracy.gif`} alt="Demokrati" className="hero-gif-overlay" />
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ function HomePage() {
       <div className="polls-grid">
         {polls.length === 0 ? (
           <div className="no-polls">
-            <img src="/checklist-paper-green-tick.jpg" alt="Ingen polls" className="empty-state-image" />
+            <img src={`${import.meta.env.BASE_URL}checklist-paper-green-tick.jpg`} alt="Ingen polls" className="empty-state-image" />
             <p>Ingen polls ennå. Vær den første til å opprette en!</p>
           </div>
         ) : (

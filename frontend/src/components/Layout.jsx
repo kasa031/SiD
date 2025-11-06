@@ -38,7 +38,7 @@ function Layout({ children }) {
       <header className="header">
         <div className="header-content">
           <Link to="/" className="logo">
-            Polls
+            SiD
           </Link>
           <nav className="nav">
             <Link to="/">Hjem</Link>
@@ -66,7 +66,7 @@ function Layout({ children }) {
         {children}
       </main>
       <footer className="footer">
-        <p>Polls Nettside - Kobler folket og politikere sammen</p>
+        <p>SiD - Kobler folket og politikere sammen</p>
       </footer>
     </div>
   );

@@ -84,7 +84,7 @@ function StatsPage() {
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon">
-            <img src="/pen-ticks-paper.jpg" alt="Polls" className="stat-icon-image" />
+            <img src={`${import.meta.env.BASE_URL}pen-ticks-paper.jpg`} alt="Polls" className="stat-icon-image" />
           </div>
           <div className="stat-value">{overview.total_polls || 0}</div>
           <div className="stat-label">Totalt antall polls</div>
@@ -92,7 +92,7 @@ function StatsPage() {
 
         <div className="stat-card">
           <div className="stat-icon">
-            <img src="/letOurVotesBeHeard.gif" alt="Stemmer" className="stat-icon-image" />
+            <img src={`${import.meta.env.BASE_URL}letOurVotesBeHeard.gif`} alt="Stemmer" className="stat-icon-image" />
           </div>
           <div className="stat-value">{overview.total_votes || 0}</div>
           <div className="stat-label">Totalt antall stemmer</div>
@@ -100,7 +100,7 @@ function StatsPage() {
 
         <div className="stat-card">
           <div className="stat-icon">
-            <img src="/emoji_satisfaction_meter.jpg" alt="Kommentarer" className="stat-icon-image" />
+            <img src={`${import.meta.env.BASE_URL}emoji_satisfaction_meter.jpg`} alt="Kommentarer" className="stat-icon-image" />
           </div>
           <div className="stat-value">{overview.total_comments || 0}</div>
           <div className="stat-label">Totalt antall kommentarer</div>
@@ -108,7 +108,7 @@ function StatsPage() {
 
         <div className="stat-card">
           <div className="stat-icon">
-            <img src="/Strongdiversity.gif" alt="Brukere" className="stat-icon-image" />
+            <img src={`${import.meta.env.BASE_URL}Strongdiversity.gif`} alt="Brukere" className="stat-icon-image" />
           </div>
           <div className="stat-value">{overview.total_users || 0}</div>
           <div className="stat-label">Aktive brukere</div>

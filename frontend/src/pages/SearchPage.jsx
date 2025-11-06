@@ -112,7 +112,7 @@ function SearchPage() {
 
       {loading ? (
         <div className="loading">
-          <img src="/mobile-phone-check-list.jpg" alt="Søker" className="loading-image" />
+          <img src={`${import.meta.env.BASE_URL}mobile-phone-check-list.jpg`} alt="Søker" className="loading-image" />
           <p>Søker...</p>
         </div>
       ) : (
