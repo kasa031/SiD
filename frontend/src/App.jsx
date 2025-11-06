@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Base path for GitHub Pages
+const basename = import.meta.env.PROD ? '/SiD' : '';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -19,7 +22,7 @@ window.showToast = showToast;
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Layout>
           <ToastContainer />
         <Routes>
