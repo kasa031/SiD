@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { validatePollTitle, validateComment } from '../utils/validation';
+import { CATEGORIES } from '../utils/categories';
 import '../styles/CreatePollPage.css';
 
 function CreatePollPage() {
@@ -18,16 +19,7 @@ function CreatePollPage() {
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   
-  const categories = [
-    { value: 'miljo', label: 'Miljø' },
-    { value: 'samfunn', label: 'Samfunn' },
-    { value: 'helse', label: 'Helse' },
-    { value: 'utdanning', label: 'Utdanning' },
-    { value: 'transport', label: 'Transport' },
-    { value: 'okonomi', label: 'Økonomi' },
-    { value: 'politikk', label: 'Politikk' },
-    { value: 'kultur', label: 'Kultur' }
-  ];
+  const categories = CATEGORIES;
 
   const handleAddOption = () => {
     setOptions([...options, '']);

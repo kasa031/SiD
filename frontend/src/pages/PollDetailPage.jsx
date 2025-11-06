@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
 import { getAvatarUrl } from '../utils/avatar';
 import { validateComment } from '../utils/validation';
+import { getCategoryLabel } from '../utils/categories';
 import '../styles/PollDetailPage.css';
 
 function PollDetailPage() {
@@ -151,14 +152,7 @@ function PollDetailPage() {
         {poll.category && (
           <div className="poll-category-section">
             <span className="category-badge">
-              {poll.category === 'miljo' ? 'Miljø' :
-               poll.category === 'samfunn' ? 'Samfunn' :
-               poll.category === 'helse' ? 'Helse' :
-               poll.category === 'utdanning' ? 'Utdanning' :
-               poll.category === 'transport' ? 'Transport' :
-               poll.category === 'okonomi' ? 'Økonomi' :
-               poll.category === 'politikk' ? 'Politikk' :
-               poll.category === 'kultur' ? 'Kultur' : poll.category}
+              {getCategoryLabel(poll.category)}
             </span>
           </div>
         )}

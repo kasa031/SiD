@@ -4,6 +4,7 @@ import api from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import InspirationBanner from '../components/InspirationBanner';
 import { formatRelativeTime } from '../utils/date';
+import { getCategoryLabel } from '../utils/categories';
 import '../styles/HomePage.css';
 
 function HomePage() {
@@ -67,14 +68,7 @@ function HomePage() {
                   </span>
                   {poll.category && (
                     <span className="category-badge">
-                      {poll.category === 'miljo' ? 'Miljø' :
-                       poll.category === 'samfunn' ? 'Samfunn' :
-                       poll.category === 'helse' ? 'Helse' :
-                       poll.category === 'utdanning' ? 'Utdanning' :
-                       poll.category === 'transport' ? 'Transport' :
-                       poll.category === 'okonomi' ? 'Økonomi' :
-                       poll.category === 'politikk' ? 'Politikk' :
-                       poll.category === 'kultur' ? 'Kultur' : poll.category}
+                      {getCategoryLabel(poll.category)}
                     </span>
                   )}
                 </div>
@@ -96,14 +90,7 @@ function HomePage() {
               {poll.category && (
                 <div className="poll-category">
                   <span className="category-badge">
-                    {poll.category === 'miljo' ? 'Miljø' :
-                     poll.category === 'samfunn' ? 'Samfunn' :
-                     poll.category === 'helse' ? 'Helse' :
-                     poll.category === 'utdanning' ? 'Utdanning' :
-                     poll.category === 'transport' ? 'Transport' :
-                     poll.category === 'okonomi' ? 'Økonomi' :
-                     poll.category === 'politikk' ? 'Politikk' :
-                     poll.category === 'kultur' ? 'Kultur' : poll.category}
+                    {getCategoryLabel(poll.category)}
                   </span>
                 </div>
               )}

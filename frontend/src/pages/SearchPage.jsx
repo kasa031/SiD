@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
+import { CATEGORIES } from '../utils/categories';
 import '../styles/SearchPage.css';
 
 function SearchPage() {
@@ -11,16 +12,7 @@ function SearchPage() {
   const [polls, setPolls] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  const categories = [
-    { value: 'miljo', label: 'Miljø' },
-    { value: 'samfunn', label: 'Samfunn' },
-    { value: 'helse', label: 'Helse' },
-    { value: 'utdanning', label: 'Utdanning' },
-    { value: 'transport', label: 'Transport' },
-    { value: 'okonomi', label: 'Økonomi' },
-    { value: 'politikk', label: 'Politikk' },
-    { value: 'kultur', label: 'Kultur' }
-  ];
+  const categories = CATEGORIES;
 
   useEffect(() => {
     performSearch();

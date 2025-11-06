@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { CATEGORIES } from '../utils/categories';
 import '../styles/StatsPage.css';
 
 function StatsPage() {
@@ -42,14 +43,7 @@ function StatsPage() {
 
   const categories = [
     { value: '', label: 'Alle kategorier' },
-    { value: 'miljo', label: 'Miljø' },
-    { value: 'helse', label: 'Helse' },
-    { value: 'utdanning', label: 'Utdanning' },
-    { value: 'transport', label: 'Transport' },
-    { value: 'okonomi', label: 'Økonomi' },
-    { value: 'samfunn', label: 'Samfunn' },
-    { value: 'politikk', label: 'Politikk' },
-    { value: 'kultur', label: 'Kultur' },
+    ...CATEGORIES,
   ];
 
   if (loading) {
