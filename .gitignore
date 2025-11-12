@@ -46,3 +46,6 @@ backend/uploads/
 *.db
 *.sqlite
 
+# Admin info (kan inneholde sensitiv informasjon)
+ADMIN_BRUKER_INFO.md
+
