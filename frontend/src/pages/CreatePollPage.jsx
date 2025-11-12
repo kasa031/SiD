@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { validatePollTitle, validateComment } from '../utils/validation';
 import { CATEGORIES } from '../utils/categories';
+import { trackPollCreation } from '../utils/analytics';
 import '../styles/CreatePollPage.css';
 
 function CreatePollPage() {
@@ -84,8 +85,12 @@ function CreatePollPage() {
         politician_tags: politicianTags,
       });
 
-      navigate(`/poll/${response.data.poll_id}`);
+      const pollId = response.data.poll_id;
+      navigate(`/poll/${pollId}`);
       window.showToast?.('Poll opprettet!', 'success');
+      
+      // Track poll creation in analytics
+      trackPollCreation(pollId, category);
       
       // Check for badges
       try {
@@ -103,16 +108,21 @@ function CreatePollPage() {
   };
 
   return (
-    <div className="create-poll-page">
+    <div className="create-poll-page" role="main">
       <div className="create-poll-card">
         <h1>Opprett ny poll</h1>
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        {error && (
+          <div className="error-message" role="alert" aria-live="polite">
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} aria-label="Opprett ny poll skjema">
           <div className="form-group">
             <label htmlFor="title">Tittel *</label>
             <input
               type="text"
               id="title"
+              name="title"
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
@@ -122,9 +132,19 @@ function CreatePollPage() {
               }}
               required
               placeholder="Hva skal pollen handle om?"
+              aria-required="true"
+              aria-invalid={validationErrors.title ? 'true' : 'false'}
+              aria-describedby={validationErrors.title ? 'title-error' : undefined}
             />
             {validationErrors.title && (
-              <span className="validation-error">{validationErrors.title}</span>
+              <span 
+                id="title-error" 
+                className="validation-error" 
+                role="alert"
+                aria-live="polite"
+              >
+                {validationErrors.title}
+              </span>
             )}
           </div>
 
@@ -132,10 +152,12 @@ function CreatePollPage() {
             <label htmlFor="description">Beskrivelse</label>
             <textarea
               id="description"
+              name="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows="4"
               placeholder="Gi mer informasjon om pollen (valgfritt)"
+              aria-label="Beskrivelse av poll"
             />
           </div>
 
@@ -143,8 +165,11 @@ function CreatePollPage() {
             <label htmlFor="locationType">Område *</label>
             <select
               id="locationType"
+              name="locationType"
               value={locationType}
               onChange={(e) => setLocationType(e.target.value)}
+              aria-required="true"
+              aria-label="Velg område for poll"
             >
               <option value="land">Hele landet</option>
               <option value="by">Spesifikk by</option>
@@ -157,10 +182,13 @@ function CreatePollPage() {
               <input
                 type="text"
                 id="locationName"
+                name="locationName"
                 value={locationName}
                 onChange={(e) => setLocationName(e.target.value)}
                 required={locationType === 'by'}
                 placeholder="f.eks. Oslo, Bergen, Trondheim"
+                aria-required="true"
+                aria-label="Bynavn"
               />
             </div>
           )}
@@ -169,8 +197,10 @@ function CreatePollPage() {
             <label htmlFor="category">Kategori (valgfritt)</label>
             <select
               id="category"
+              name="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              aria-label="Velg kategori for poll"
             >
               <option value="">Ingen kategori</option>
               {categories.map(cat => (
@@ -180,21 +210,26 @@ function CreatePollPage() {
           </div>
 
           <div className="form-group">
-            <label>Alternativer * (minst 2)</label>
+            <label htmlFor="option-0">Alternativer * (minst 2)</label>
             {options.map((option, index) => (
               <div key={index} className="option-input-group">
                 <input
                   type="text"
+                  id={`option-${index}`}
+                  name={`option-${index}`}
                   value={option}
                   onChange={(e) => handleOptionChange(index, e.target.value)}
                   placeholder={`Alternativ ${index + 1}`}
                   required
+                  aria-required="true"
+                  aria-label={`Alternativ ${index + 1}`}
                 />
                 {options.length > 2 && (
                   <button
                     type="button"
                     onClick={() => handleRemoveOption(index)}
                     className="remove-button"
+                    aria-label={`Fjern alternativ ${index + 1}`}
                   >
                     ✕
                   </button>
@@ -205,6 +240,7 @@ function CreatePollPage() {
               type="button"
               onClick={handleAddOption}
               className="button-blue"
+              aria-label="Legg til nytt alternativ"
             >
               + Legg til alternativ
             </button>

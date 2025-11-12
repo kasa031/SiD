@@ -36,17 +36,63 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Error handling interceptor
+// Error handling interceptor with detailed error messages
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Unauthorized - clear token and redirect to login
-      localStorage.removeItem('token');
-      if (window.location.pathname !== '/login') {
-        window.location.href = '/login';
+    // Handle different error types with specific messages
+    if (error.response) {
+      // Server responded with error status
+      const status = error.response.status;
+      const data = error.response.data;
+      
+      // Get specific error message from server or use default
+      let errorMessage = data?.error || data?.message || 'En feil oppstod';
+      
+      switch (status) {
+        case 401:
+          // Unauthorized - clear token and redirect to login
+          localStorage.removeItem('token');
+          if (window.location.pathname !== '/login') {
+            window.location.href = '/login';
+          }
+          errorMessage = 'Du må logge inn for å fortsette';
+          break;
+        case 403:
+          errorMessage = 'Du har ikke tilgang til denne ressursen';
+          break;
+        case 404:
+          errorMessage = 'Ressursen ble ikke funnet';
+          break;
+        case 409:
+          errorMessage = data?.error || 'Konflikt: Ressursen eksisterer allerede';
+          break;
+        case 422:
+          errorMessage = data?.error || 'Ugyldig data sendt til serveren';
+          break;
+        case 429:
+          errorMessage = 'For mange forespørsler. Prøv igjen senere.';
+          break;
+        case 500:
+          errorMessage = 'Serverfeil. Prøv igjen senere.';
+          break;
+        case 503:
+          errorMessage = 'Tjenesten er midlertidig utilgjengelig. Prøv igjen senere.';
+          break;
+        default:
+          errorMessage = data?.error || `Feil: ${status}`;
       }
+      
+      // Enhance error object with user-friendly message
+      error.userMessage = errorMessage;
+    } else if (error.request) {
+      // Request was made but no response received
+      error.userMessage = 'Kunne ikke koble til serveren. Sjekk internettforbindelsen din.';
+    } else {
+      // Error setting up request
+      error.userMessage = 'En uventet feil oppstod. Prøv igjen.';
     }
+    
     return Promise.reject(error);
   }
 );

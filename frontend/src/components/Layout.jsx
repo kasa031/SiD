@@ -35,39 +35,45 @@ function Layout({ children }) {
 
   return (
     <div className="layout">
-      <header className="header">
+      <header className="header" role="banner">
         <div className="header-content">
           <div className="logo-container">
-            <Link to="/" className="logo">
+            <Link to="/" className="logo" aria-label="SiD - Gå til hjemmeside">
               SiD
             </Link>
-            <nav className="nav-dropdown">
-              <Link to="/">Hjem</Link>
-              <Link to="/search">Søk</Link>
-              <Link to="/stats">Statistikk</Link>
+            <nav className="nav-dropdown" role="navigation" aria-label="Hovednavigasjon">
+              <Link to="/" aria-label="Gå til hjemmeside">Hjem</Link>
+              <Link to="/search" aria-label="Søk etter polls">Søk</Link>
+              <Link to="/stats" aria-label="Vis statistikk">Statistikk</Link>
               {user ? (
                 <>
-                  <Link to="/create-poll">Opprett Poll</Link>
-                  <Link to={`/profile/${user.id}`}>Profil</Link>
-                  <Link to="/politician-search">Politikersøk</Link>
-                  <button onClick={handleLogout} className="button-red">
+                  <Link to="/create-poll" aria-label="Opprett ny poll">Opprett Poll</Link>
+                  <Link to={`/profile/${user.id}`} aria-label={`Gå til profil for ${user.username}`}>
+                    Profil
+                  </Link>
+                  <Link to="/politician-search" aria-label="Søk etter politikere">Politikersøk</Link>
+                  <button 
+                    onClick={handleLogout} 
+                    className="button-red"
+                    aria-label="Logg ut av konto"
+                  >
                     Logg ut
                   </button>
                 </>
               ) : (
                 <>
-                  <Link to="/login">Logg inn</Link>
-                  <Link to="/register">Registrer</Link>
+                  <Link to="/login" aria-label="Logg inn på konto">Logg inn</Link>
+                  <Link to="/register" aria-label="Registrer ny konto">Registrer</Link>
                 </>
               )}
             </nav>
           </div>
         </div>
       </header>
-      <main className="main-content">
+      <main className="main-content" role="main">
         {children}
       </main>
-      <footer className="footer">
+      <footer className="footer" role="contentinfo">
         <p>SiD - Kobler folket og politikere sammen</p>
       </footer>
     </div>

@@ -28,6 +28,8 @@ function InspirationBanner() {
             alt="Inspirasjon" 
             className="inspiration-gif"
             key={currentGif}
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

@@ -88,6 +88,8 @@ function ProfilePage() {
             <img
               src={getAvatarUrl(user.profile_picture_url)}
               alt={user.username}
+              loading="lazy"
+              decoding="async"
               className="profile-picture"
               onError={(e) => {
                 e.target.src = getAvatarUrl();

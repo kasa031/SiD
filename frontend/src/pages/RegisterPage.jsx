@@ -44,16 +44,21 @@ function RegisterPage() {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container" role="main">
       <div className="auth-card">
         <h1>Registrer deg</h1>
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        {error && (
+          <div className="error-message" role="alert" aria-live="polite">
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} aria-label="Registreringsskjema">
           <div className="form-group">
             <label htmlFor="username">Brukernavn</label>
             <input
               type="text"
               id="username"
+              name="username"
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
@@ -62,9 +67,20 @@ function RegisterPage() {
                 }
               }}
               required
+              aria-required="true"
+              aria-invalid={validationErrors.username ? 'true' : 'false'}
+              aria-describedby={validationErrors.username ? 'username-error' : undefined}
+              autoComplete="username"
             />
             {validationErrors.username && (
-              <span className="validation-error">{validationErrors.username}</span>
+              <span 
+                id="username-error" 
+                className="validation-error" 
+                role="alert"
+                aria-live="polite"
+              >
+                {validationErrors.username}
+              </span>
             )}
           </div>
           <div className="form-group">
@@ -72,6 +88,7 @@ function RegisterPage() {
             <input
               type="email"
               id="email"
+              name="email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -79,9 +96,19 @@ function RegisterPage() {
                   setValidationErrors({ ...validationErrors, email: null });
                 }
               }}
+              aria-invalid={validationErrors.email ? 'true' : 'false'}
+              aria-describedby={validationErrors.email ? 'email-error' : undefined}
+              autoComplete="email"
             />
             {validationErrors.email && (
-              <span className="validation-error">{validationErrors.email}</span>
+              <span 
+                id="email-error" 
+                className="validation-error" 
+                role="alert"
+                aria-live="polite"
+              >
+                {validationErrors.email}
+              </span>
             )}
           </div>
           <div className="form-group">
@@ -89,6 +116,7 @@ function RegisterPage() {
             <input
               type="password"
               id="password"
+              name="password"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -98,17 +126,32 @@ function RegisterPage() {
               }}
               required
               minLength={6}
+              aria-required="true"
+              aria-invalid={validationErrors.password ? 'true' : 'false'}
+              aria-describedby={validationErrors.password ? 'password-error' : undefined}
+              autoComplete="new-password"
             />
             {validationErrors.password && (
-              <span className="validation-error">{validationErrors.password}</span>
+              <span 
+                id="password-error" 
+                className="validation-error" 
+                role="alert"
+                aria-live="polite"
+              >
+                {validationErrors.password}
+              </span>
             )}
           </div>
-          <button type="submit" className="button-green full-width">
+          <button 
+            type="submit" 
+            className="button-green full-width"
+            aria-label="Registrer ny konto"
+          >
             Registrer
           </button>
         </form>
         <p className="auth-link">
-          Har du allerede konto? <Link to="/login">Logg inn her</Link>
+          Har du allerede konto? <Link to="/login" aria-label="Gå til innloggingsside">Logg inn her</Link>
         </p>
       </div>
     </div>

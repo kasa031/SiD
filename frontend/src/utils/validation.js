@@ -59,3 +59,40 @@ export const validateComment = (comment) => {
   return null;
 };
 
+export const validatePollDescription = (description) => {
+  if (description && description.length > 2000) {
+    return 'Beskrivelse kan ikke være lengre enn 2000 tegn';
+  }
+  return null;
+};
+
+export const validatePollOption = (option) => {
+  if (!option || option.trim().length === 0) {
+    return 'Alternativ kan ikke være tomt';
+  }
+  if (option.length > 255) {
+    return 'Alternativ kan ikke være lengre enn 255 tegn';
+  }
+  return null;
+};
+
+export const validateLocationName = (locationName) => {
+  if (locationName && locationName.length > 100) {
+    return 'Stedsnavn kan ikke være lengre enn 100 tegn';
+  }
+  return null;
+};
+
+export const validatePoliticianName = (name) => {
+  if (!name || name.trim().length === 0) {
+    return 'Politikernavn er påkrevd';
+  }
+  if (name.length < 2) {
+    return 'Politikernavn må være minst 2 tegn';
+  }
+  if (name.length > 100) {
+    return 'Politikernavn kan ikke være lengre enn 100 tegn';
+  }
+  return null;
+};
+

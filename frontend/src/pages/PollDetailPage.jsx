@@ -4,6 +4,9 @@ import api from '../services/api';
 import { getAvatarUrl } from '../utils/avatar';
 import { validateComment } from '../utils/validation';
 import { getCategoryLabel } from '../utils/categories';
+import { sharePollWithFallback, copyPollLink } from '../utils/share';
+import { trackEvent } from '../utils/analytics';
+import { exportPollToCSV, exportPollToPDF } from '../utils/export';
 import '../styles/PollDetailPage.css';
 
 function PollDetailPage() {
@@ -84,6 +87,12 @@ function PollDetailPage() {
       fetchPoll(); // Refresh poll to get updated vote counts
       window.showToast?.('Stemme registrert!', 'success');
       
+      // Track vote in analytics
+      trackEvent('vote_cast', {
+        poll_id: id,
+        option_id: optionId,
+      });
+      
       // Check for badges
       try {
         await api.post('/badges/check');
@@ -135,15 +144,91 @@ function PollDetailPage() {
 
   const totalVotes = poll.options.reduce((sum, opt) => sum + opt.votes_count, 0);
 
+  const handleShare = async () => {
+    await sharePollWithFallback(id, poll.title);
+    trackEvent('poll_shared', {
+      poll_id: id,
+      poll_title: poll.title,
+    });
+  };
+
+  const handleCopyLink = async () => {
+    await copyPollLink(id, poll.title);
+    trackEvent('poll_link_copied', {
+      poll_id: id,
+    });
+  };
+
+  const handleExportCSV = () => {
+    exportPollToCSV(poll, poll.options);
+    trackEvent('poll_exported', {
+      poll_id: id,
+      format: 'csv',
+    });
+  };
+
+  const handleExportPDF = async () => {
+    await exportPollToPDF(poll, poll.options);
+    trackEvent('poll_exported', {
+      poll_id: id,
+      format: 'pdf',
+    });
+  };
+
   return (
     <div className="poll-detail-page">
       <div className="poll-detail-card">
         <div className="poll-detail-header">
-          <h1>{poll.title}</h1>
-          <span className={`location-badge ${poll.location_type}`}>
-            {poll.location_type === 'by' ? poll.location_name : 'Hele landet'}
-          </span>
+          <div className="poll-header-content">
+            <h1>{poll.title}</h1>
+            <div className="poll-header-actions">
+              <span className={`location-badge ${poll.location_type}`}>
+                {poll.location_type === 'by' ? poll.location_name : 'Hele landet'}
+              </span>
+              <button
+                onClick={handleShare}
+                className="button-secondary share-button"
+                aria-label="Del denne poll"
+                title="Del poll"
+              >
+                📤 Del
+              </button>
+              <button
+                onClick={handleCopyLink}
+                className="button-secondary copy-link-button"
+                aria-label="Kopier lenke til poll"
+                title="Kopier lenke"
+              >
+                🔗 Kopier lenke
+              </button>
+            </div>
+          </div>
         </div>
+
+        {/* Export buttons - show if poll has votes */}
+        {totalVotes > 0 && (
+          <div className="poll-export-section">
+            <h3>Eksporter resultater</h3>
+            <div className="export-buttons">
+              <button
+                onClick={handleExportCSV}
+                className="button-secondary"
+                aria-label="Eksporter poll som CSV"
+                title="Eksporter som CSV"
+              >
+                📊 Eksporter CSV
+              </button>
+              <button
+                onClick={handleExportPDF}
+                className="button-secondary"
+                aria-label="Eksporter poll som PDF"
+                title="Eksporter som PDF (åpner print-dialog)"
+              >
+                📄 Eksporter PDF
+              </button>
+            </div>
+          </div>
+        )}
 
         {poll.description && (
           <p className="poll-description">{poll.description}</p>
@@ -233,6 +318,8 @@ function PollDetailPage() {
                   src={getAvatarUrl(comment.profile_picture_url)}
                   alt={comment.username}
                   className="comment-avatar"
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     e.target.src = getAvatarUrl();
                   }}

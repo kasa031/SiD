@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Base path for GitHub Pages
 const basename = import.meta.env.PROD ? '/SiD' : '';
@@ -6,6 +7,7 @@ import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import ToastContainer, { showToast } from './components/Toast';
+import { trackPageView } from './utils/analytics';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -19,10 +21,23 @@ import StatsPage from './pages/StatsPage';
 // Make showToast available globally
 window.showToast = showToast;
 
+// Component to track page views
+function PageViewTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Track page view when route changes
+    trackPageView(location.pathname + location.search);
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter basename={basename}>
+        <PageViewTracker />
         <Layout>
           <ToastContainer />
         <Routes>

@@ -41,16 +41,21 @@ function LoginPage() {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container" role="main">
       <div className="auth-card">
         <h1>Logg inn</h1>
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        {error && (
+          <div className="error-message" role="alert" aria-live="polite">
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} aria-label="Innloggingsskjema">
           <div className="form-group">
             <label htmlFor="username">Brukernavn</label>
             <input
               type="text"
               id="username"
+              name="username"
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
@@ -59,9 +64,20 @@ function LoginPage() {
                 }
               }}
               required
+              aria-required="true"
+              aria-invalid={validationErrors.username ? 'true' : 'false'}
+              aria-describedby={validationErrors.username ? 'username-error' : undefined}
+              autoComplete="username"
             />
             {validationErrors.username && (
-              <span className="validation-error">{validationErrors.username}</span>
+              <span 
+                id="username-error" 
+                className="validation-error" 
+                role="alert"
+                aria-live="polite"
+              >
+                {validationErrors.username}
+              </span>
             )}
           </div>
           <div className="form-group">
@@ -69,6 +85,7 @@ function LoginPage() {
             <input
               type="password"
               id="password"
+              name="password"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -77,17 +94,32 @@ function LoginPage() {
                 }
               }}
               required
+              aria-required="true"
+              aria-invalid={validationErrors.password ? 'true' : 'false'}
+              aria-describedby={validationErrors.password ? 'password-error' : undefined}
+              autoComplete="current-password"
             />
             {validationErrors.password && (
-              <span className="validation-error">{validationErrors.password}</span>
+              <span 
+                id="password-error" 
+                className="validation-error" 
+                role="alert"
+                aria-live="polite"
+              >
+                {validationErrors.password}
+              </span>
             )}
           </div>
-          <button type="submit" className="button-blue full-width">
+          <button 
+            type="submit" 
+            className="button-blue full-width"
+            aria-label="Logg inn på konto"
+          >
             Logg inn
           </button>
         </form>
         <p className="auth-link">
-          Har du ikke konto? <Link to="/register">Registrer deg her</Link>
+          Har du ikke konto? <Link to="/register" aria-label="Gå til registreringsside">Registrer deg her</Link>
         </p>
       </div>
     </div>
