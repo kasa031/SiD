@@ -5,6 +5,7 @@ import '../styles/Layout.css';
 
 function Layout({ children }) {
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,12 +19,24 @@ function Layout({ children }) {
     try {
       const response = await api.get('/auth/me');
       setUser(response.data.user);
+      // Sjekk om bruker er admin
+      checkAdminStatus();
     } catch (error) {
       // Only clear token if it's actually invalid (401)
       if (error.response?.status === 401) {
         localStorage.removeItem('token');
         setUser(null);
+        setIsAdmin(false);
       }
+    }
+  };
+
+  const checkAdminStatus = async () => {
+    try {
+      const response = await api.get('/admin/check');
+      setIsAdmin(response.data.is_admin);
+    } catch (error) {
+      setIsAdmin(false);
     }
   };
 
@@ -52,6 +65,9 @@ function Layout({ children }) {
                     Profil
                   </Link>
                   <Link to="/politician-search" aria-label="Søk etter politikere">Politikersøk</Link>
+                  {isAdmin && (
+                    <Link to="/admin" aria-label="Admin dashboard">Admin</Link>
+                  )}
                   <button 
                     onClick={handleLogout} 
                     className="button-red"

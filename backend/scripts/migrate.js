@@ -24,7 +24,7 @@ async function runMigrations() {
     
     // Migration 1
     const migration1 = readFileSync(
-      join(__dirname, '../database/migrations/001_initial_schema.sql'),
+      join(__dirname, '../../database/migrations/001_initial_schema.sql'),
       'utf8'
     );
     console.log('📝 Kjører migration 001_initial_schema.sql...');
@@ -33,12 +33,30 @@ async function runMigrations() {
 
     // Migration 2
     const migration2 = readFileSync(
-      join(__dirname, '../database/migrations/002_add_categories_and_badges.sql'),
+      join(__dirname, '../../database/migrations/002_add_categories_and_badges.sql'),
       'utf8'
     );
     console.log('📝 Kjører migration 002_add_categories_and_badges.sql...');
     await pool.query(migration2);
     console.log('✅ Migration 002 fullført');
+
+    // Migration 3
+    const migration3 = readFileSync(
+      join(__dirname, '../../database/migrations/003_add_poll_moderation.sql'),
+      'utf8'
+    );
+    console.log('📝 Kjører migration 003_add_poll_moderation.sql...');
+    await pool.query(migration3);
+    console.log('✅ Migration 003 fullført');
+
+    // Migration 4
+    const migration4 = readFileSync(
+      join(__dirname, '../../database/migrations/004_add_admin_support.sql'),
+      'utf8'
+    );
+    console.log('📝 Kjører migration 004_add_admin_support.sql...');
+    await pool.query(migration4);
+    console.log('✅ Migration 004 fullført');
 
     console.log('🎉 Alle migrations fullført!');
   } catch (error) {

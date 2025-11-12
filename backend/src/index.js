@@ -63,6 +63,7 @@ import commentRoutes from './routes/comments.js';
 import statsRoutes from './routes/stats.js';
 import badgeRoutes from './routes/badges.js';
 import aiRoutes from './routes/ai.js';
+import adminRoutes from './routes/admin.js';
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -77,6 +78,7 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/badges', badgeRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Railway sets PORT automatically, listen on all interfaces
 const server = app.listen(PORT, '0.0.0.0', () => {

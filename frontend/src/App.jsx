@@ -17,6 +17,7 @@ import ProfilePage from './pages/ProfilePage';
 import PoliticianSearchPage from './pages/PoliticianSearchPage';
 import SearchPage from './pages/SearchPage';
 import StatsPage from './pages/StatsPage';
+import AdminDashboard from './pages/AdminDashboard';
 
 // Make showToast available globally
 window.showToast = showToast;
@@ -58,6 +59,14 @@ function App() {
           <Route path="/politician-search" element={<PoliticianSearchPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/stats" element={<StatsPage />} />
+          <Route 
+            path="/admin" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
         </Layout>
       </BrowserRouter>

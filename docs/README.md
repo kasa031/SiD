@@ -45,6 +45,7 @@ Oppsett og konfigurasjonsguider:
 
 ### 💻 Development (`development/`)
 Utviklingsrelatert dokumentasjon:
+- **ADMIN_SETUP.md** - Admin dashboard setup og bruk
 - **HOOKS_SUMMARY.md** - React hooks sammendrag
 - **KODE_GJENNOMGANG.md** - Kodegjennomgang og analyse
 - **LOGIN_OPTIMIZATION_REPORT.md** - Login optimalisering rapport

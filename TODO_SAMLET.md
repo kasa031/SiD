@@ -81,7 +81,7 @@ Alle hovedfunksjoner er implementert og bekreftet i kode:
 - [ ] Email notifications
 - [x] Poll sharing (deling via lenker) ✅
 - [x] Export poll results (CSV/PDF) ✅
-- [ ] Admin dashboard
+- [x] Admin dashboard ✅
 - [x] Poll moderation (rapportering, sletting) ✅
 - [ ] Real-time oppdateringer (WebSockets)
 - [ ] Offline-støtte (Service Workers)
