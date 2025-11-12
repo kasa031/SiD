@@ -62,5 +62,5 @@ Etter push, sjekk at:
 
 - `backend/env` filen er **ikke** committed (sikkerhet)
 - GitHub Actions vil automatisk bygge og deploye frontend
-- Backend må deployes separat (se `DEPLOYMENT.md`)
+- Backend må deployes separat (se `../deployment/DEPLOYMENT.md`)
 

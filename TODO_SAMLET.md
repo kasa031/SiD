@@ -28,7 +28,7 @@ Alle hovedfunksjoner er implementert og bekreftet i kode:
 - [ ] Sett environment variables i Railway backend service:
   - [ ] `JWT_SECRET` (generer: `openssl rand -base64 32`)
   - [ ] `FRONTEND_URL=https://kasa031.github.io`
-  - [ ] `OPENROUTER_API_KEY=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`
+  - [ ] `OPENROUTER_API_KEY=din_openrouter_api_key_her`
   - [ ] `PORT=3001` (valgfritt)
   - [ ] `DATABASE_URL` (settes automatisk av Railway)
 
@@ -46,9 +46,12 @@ Alle hovedfunksjoner er implementert og bekreftet i kode:
 
 ### 🧪 PRIORITET 2: Testing
 
+- [x] Sett opp test-rammeverk (Jest for backend, Vitest for frontend) ✅
+- [x] Lag grunnleggende tester for backend (auth routes, validation utils) ✅
+- [x] Lag grunnleggende tester for frontend (validation utils, komponenter) ✅
 - [ ] Test alle funksjoner lokalt
-- [ ] Test backend API endpoints
-- [ ] Test frontend komponenter
+- [ ] Test backend API endpoints (utvid testdekning)
+- [ ] Test frontend komponenter (utvid testdekning)
 - [ ] Test responsivt design på ulike enheter
 - [ ] Test error handling og edge cases
 
@@ -68,7 +71,7 @@ Alle hovedfunksjoner er implementert og bekreftet i kode:
 ### 🔒 PRIORITET 4: Sikkerhet
 
 - [x] Gjennomgå og test alle sikkerhetstiltak ✅
-- [x] Security audit av kodebase ✅ (se `SECURITY_AUDIT.md`)
+- [x] Security audit av kodebase ✅ (se `docs/security/SECURITY_AUDIT.md`)
 - [ ] Roter JWT_SECRET i produksjon (hvis nødvendig - valgfritt)
 
 ---
@@ -79,7 +82,7 @@ Alle hovedfunksjoner er implementert og bekreftet i kode:
 - [x] Poll sharing (deling via lenker) ✅
 - [x] Export poll results (CSV/PDF) ✅
 - [ ] Admin dashboard
-- [ ] Poll moderation (rapportering, sletting)
+- [x] Poll moderation (rapportering, sletting) ✅
 - [ ] Real-time oppdateringer (WebSockets)
 - [ ] Offline-støtte (Service Workers)
 
@@ -96,8 +99,10 @@ Alle hovedfunksjoner er implementert og bekreftet i kode:
 
 ## 📚 Nyttige Guider
 
-- `RAILWAY_QUICK_START.md` - Detaljert Railway deployment guide
-- `DEPLOYMENT_STATUS.md` - Nåværende deployment status
-- `RAILWAY_SETUP.md` - Steg-for-steg Railway setup
-- `ANALYTICS_SETUP.md` - Google Analytics setup guide
-- `SECURITY_AUDIT.md` - Sikkerhetsaudit og oversikt
+Se [docs/README.md](docs/README.md) for full oversikt over all dokumentasjon.
+
+- `docs/deployment/RAILWAY_QUICK_START.md` - Detaljert Railway deployment guide
+- `docs/deployment/DEPLOYMENT_STATUS.md` - Nåværende deployment status
+- `docs/deployment/RAILWAY_SETUP.md` - Steg-for-steg Railway setup
+- `docs/deployment/ANALYTICS_SETUP.md` - Google Analytics setup guide
+- `docs/security/SECURITY_AUDIT.md` - Sikkerhetsaudit og oversikt

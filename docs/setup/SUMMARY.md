@@ -68,13 +68,13 @@ polls-nettside/
 
 ## 📚 Dokumentasjon
 
-- `README.md` - Hovedoversikt
+- `../README.md` - Hovedoversikt
 - `QUICKSTART.md` - Rask oppstart
 - `SETUP.md` - Detaljert setup
-- `DEPLOYMENT.md` - Deployment guide
+- `../deployment/DEPLOYMENT.md` - Deployment guide
 - `KJOR_DISSE.md` - Kommandoer å kjøre
-- `AUTO_DEPLOY.md` - Automatisk deployment
-- `DEPLOY_CHECKLIST.md` - Checklist
+- `../deployment/AUTO_DEPLOY.md` - Automatisk deployment
+- `../deployment/DEPLOY_CHECKLIST.md` - Checklist
 
 ## 🎨 Features
 

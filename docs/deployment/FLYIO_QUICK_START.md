@@ -116,5 +116,5 @@ npm run deploy
 **Hvis noe feiler:**
 - Sjekk logs: `flyctl logs`
 - Sjekk status: `flyctl status`
-- Se full guide: `FLYIO_SETUP.md`
+- Se full guide: `FLYIO_SETUP.md` (i samme mappe)
 

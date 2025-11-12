@@ -219,6 +219,105 @@
   }
 }
 
+.button-danger {
+  background-color: var(--color-red);
+  color: var(--text-light);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.button-danger:hover {
+  background-color: #cc0000;
+}
+
+.report-button {
+  background-color: #ff9900;
+  color: var(--text-light);
+}
+
+.report-button:hover {
+  background-color: #e68900;
+}
+
+.poll-header-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-blue);
+}
+
+.modal-content .form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.modal-content select:focus,
+.modal-content textarea:focus {
+  outline: none;
+  border-color: var(--color-blue);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+  margin-top: var(--spacing-xl);
+}
+
 @media (max-width: 480px) {
   .poll-detail-header h1 {
     font-size: 1.5rem;
@@ -227,6 +326,19 @@
   .vote-bar-container {
     flex-direction: column;
     gap: var(--spacing-xs);
+  }
+
+  .modal-content {
+    padding: var(--spacing-md);
+  }
+
+  .poll-header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .poll-header-actions button {
+    width: 100%;
   }
 }
 

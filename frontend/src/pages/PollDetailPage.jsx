@@ -19,13 +19,18 @@ function PollDetailPage() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportReason, setReportReason] = useState('');
+  const [reportDescription, setReportDescription] = useState('');
 
   useEffect(() => {
     fetchPoll();
     fetchComments();
     checkVoteStatus();
     checkUser();
-  }, [id]);
+    checkIsOwner();
+  }, [id, user]);
 
   const checkUser = () => {
     const token = localStorage.getItem('token');
@@ -33,6 +38,21 @@ function PollDetailPage() {
       api.get('/auth/me')
         .then(res => setUser(res.data.user))
         .catch(() => setUser(null));
+    }
+  };
+
+  const checkIsOwner = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setIsOwner(false);
+      return;
+    }
+
+    try {
+      const response = await api.get(`/polls/${id}/is-owner`);
+      setIsOwner(response.data.is_owner);
+    } catch (error) {
+      setIsOwner(false);
     }
   };
 
@@ -175,6 +195,41 @@ function PollDetailPage() {
     });
   };
 
+  const handleDeletePoll = async () => {
+    if (!window.confirm('Er du sikker på at du vil slette denne poll? Denne handlingen kan ikke angres.')) {
+      return;
+    }
+
+    try {
+      await api.delete(`/polls/${id}`);
+      window.showToast?.('Poll slettet', 'success');
+      navigate('/');
+    } catch (error) {
+      window.showToast?.(error.response?.data?.error || 'Feil ved sletting av poll', 'error');
+    }
+  };
+
+  const handleReportPoll = async (e) => {
+    e.preventDefault();
+    if (!reportReason) {
+      window.showToast?.('Velg en grunn for rapportering', 'error');
+      return;
+    }
+
+    try {
+      await api.post(`/polls/${id}/report`, {
+        reason: reportReason,
+        description: reportDescription,
+      });
+      window.showToast?.('Poll rapportert. Takk for din tilbakemelding.', 'success');
+      setShowReportModal(false);
+      setReportReason('');
+      setReportDescription('');
+    } catch (error) {
+      window.showToast?.(error.response?.data?.error || 'Feil ved rapportering av poll', 'error');
+    }
+  };
+
   return (
     <div className="poll-detail-page">
       <div className="poll-detail-card">
@@ -201,6 +256,26 @@ function PollDetailPage() {
               >
                 🔗 Kopier lenke
               </button>
+              {user && !isOwner && (
+                <button
+                  onClick={() => setShowReportModal(true)}
+                  className="button-secondary report-button"
+                  aria-label="Rapporter poll"
+                  title="Rapporter uønsket innhold"
+                >
+                  ⚠️ Rapporter
+                </button>
+              )}
+              {isOwner && (
+                <button
+                  onClick={handleDeletePoll}
+                  className="button-danger delete-button"
+                  aria-label="Slett poll"
+                  title="Slett denne poll"
+                >
+                  🗑️ Slett
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -336,6 +411,58 @@ function PollDetailPage() {
           ))}
         </div>
       </div>
+
+      {/* Report Modal */}
+      {showReportModal && (
+        <div className="modal-overlay" onClick={() => setShowReportModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Rapporter poll</h2>
+            <form onSubmit={handleReportPoll}>
+              <div className="form-group">
+                <label htmlFor="report-reason">Grunn for rapportering *</label>
+                <select
+                  id="report-reason"
+                  value={reportReason}
+                  onChange={(e) => setReportReason(e.target.value)}
+                  required
+                >
+                  <option value="">Velg en grunn</option>
+                  <option value="spam">Spam</option>
+                  <option value="inappropriate">Uegnet innhold</option>
+                  <option value="offensive">Støtende innhold</option>
+                  <option value="other">Annet</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="report-description">Beskrivelse (valgfritt)</label>
+                <textarea
+                  id="report-description"
+                  value={reportDescription}
+                  onChange={(e) => setReportDescription(e.target.value)}
+                  rows="4"
+                  placeholder="Beskriv problemet..."
+                />
+              </div>
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowReportModal(false);
+                    setReportReason('');
+                    setReportDescription('');
+                  }}
+                  className="button-secondary"
+                >
+                  Avbryt
+                </button>
+                <button type="submit" className="button-danger">
+                  Rapporter
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

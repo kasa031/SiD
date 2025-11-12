@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
         (SELECT COUNT(*) FROM votes WHERE poll_id = p.id) as total_votes
       FROM polls p
       LEFT JOIN users u ON p.creator_id = u.id
-      WHERE 1=1
+      WHERE p.is_deleted = FALSE
     `;
     const params = [];
     let paramCount = 0;
@@ -100,7 +100,7 @@ router.get('/:id', async (req, res) => {
         u.username as creator_username, u.profile_picture_url as creator_picture
       FROM polls p
       LEFT JOIN users u ON p.creator_id = u.id
-      WHERE p.id = $1`,
+      WHERE p.id = $1 AND p.is_deleted = FALSE`,
       [pollId]
     );
 
@@ -240,6 +240,111 @@ router.post('/', authenticateToken, pollCreationLimiter, async (req, res) => {
   } catch (error) {
     console.error('Opprett poll feil:', error);
     res.status(500).json({ error: 'Serverfeil ved opprettelse av poll' });
+  }
+});
+
+// Rapporter en poll
+router.post('/:id/report', authenticateToken, async (req, res) => {
+  try {
+    const pollId = parseInt(req.params.id);
+    const userId = req.user.id;
+    const { reason, description } = req.body;
+
+    // Valider reason
+    const validReasons = ['spam', 'inappropriate', 'offensive', 'other'];
+    if (!reason || !validReasons.includes(reason)) {
+      return res.status(400).json({ 
+        error: 'Ugyldig grunn. Må være: spam, inappropriate, offensive, eller other' 
+      });
+    }
+
+    // Sjekk om poll eksisterer og ikke er slettet
+    const pollCheck = await pool.query(
+      'SELECT id FROM polls WHERE id = $1 AND is_deleted = FALSE',
+      [pollId]
+    );
+
+    if (pollCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Poll ikke funnet' });
+    }
+
+    // Sjekk om bruker allerede har rapportert denne poll
+    const existingReport = await pool.query(
+      'SELECT id FROM poll_reports WHERE poll_id = $1 AND user_id = $2',
+      [pollId, userId]
+    );
+
+    if (existingReport.rows.length > 0) {
+      return res.status(409).json({ error: 'Du har allerede rapportert denne poll' });
+    }
+
+    // Opprett rapport
+    const sanitizedDescription = description ? sanitizeString(description) : null;
+    await pool.query(
+      'INSERT INTO poll_reports (poll_id, user_id, reason, description) VALUES ($1, $2, $3, $4)',
+      [pollId, userId, reason, sanitizedDescription]
+    );
+
+    res.status(201).json({ message: 'Poll rapportert. Takk for din tilbakemelding.' });
+  } catch (error) {
+    console.error('Rapporter poll feil:', error);
+    res.status(500).json({ error: 'Serverfeil ved rapportering av poll' });
+  }
+});
+
+// Slett en poll (kun eier)
+router.delete('/:id', authenticateToken, async (req, res) => {
+  try {
+    const pollId = parseInt(req.params.id);
+    const userId = req.user.id;
+
+    // Sjekk om poll eksisterer og at bruker er eier
+    const pollResult = await pool.query(
+      'SELECT id, creator_id FROM polls WHERE id = $1 AND is_deleted = FALSE',
+      [pollId]
+    );
+
+    if (pollResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Poll ikke funnet' });
+    }
+
+    if (pollResult.rows[0].creator_id !== userId) {
+      return res.status(403).json({ error: 'Du har ikke tilgang til å slette denne poll' });
+    }
+
+    // Soft delete - marker som slettet
+    await pool.query(
+      'UPDATE polls SET is_deleted = TRUE, deleted_at = CURRENT_TIMESTAMP, deleted_by = $1 WHERE id = $2',
+      [userId, pollId]
+    );
+
+    res.json({ message: 'Poll slettet' });
+  } catch (error) {
+    console.error('Slett poll feil:', error);
+    res.status(500).json({ error: 'Serverfeil ved sletting av poll' });
+  }
+});
+
+// Sjekk om bruker er eier av poll
+router.get('/:id/is-owner', authenticateToken, async (req, res) => {
+  try {
+    const pollId = parseInt(req.params.id);
+    const userId = req.user.id;
+
+    const pollResult = await pool.query(
+      'SELECT creator_id FROM polls WHERE id = $1 AND is_deleted = FALSE',
+      [pollId]
+    );
+
+    if (pollResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Poll ikke funnet' });
+    }
+
+    const isOwner = pollResult.rows[0].creator_id === userId;
+    res.json({ is_owner: isOwner });
+  } catch (error) {
+    console.error('Sjekk eier feil:', error);
+    res.status(500).json({ error: 'Serverfeil' });
   }
 });
 

@@ -65,5 +65,5 @@ Dette tar vanligvis 2-5 minutter.
 
 - Base path er satt til `/polls-nettside/` i `vite.config.js`
 - Hvis du endrer repository-navn, må du også endre base path
-- Backend må deployes separat (se `DEPLOYMENT.md`)
+- Backend må deployes separat (se `DEPLOYMENT.md` i samme mappe)
 
